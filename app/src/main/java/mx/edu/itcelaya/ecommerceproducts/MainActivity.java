@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     String consumer_key = "ck_937c6fcaa34debb9f047afcf4d46b6c055518e44";
     String consumer_secret = "cs_bd73d50ea69576596774a0d8487ebf067e377307";
 
-    String url = "https://192.168.43.223/wordpress/wc-api/v3/orders";
+    String url = "https://192.168.43.223/wordpress/wc-api/v3/orders/statuses";
     String jsonResult;
 
 
@@ -77,14 +77,17 @@ public class MainActivity extends AppCompatActivity {
         try {
             //lbl1.setText(jsonResult);
             JSONObject jsonResponse = new JSONObject(jsonResult);
-            JSONArray jsonMainNode = jsonResponse.optJSONArray("orders");
+            JSONArray jsonMainNode = jsonResponse.optJSONArray("order_statuses");
 
             for (int i = 0; i < jsonMainNode.length(); i++) {
                 JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-                Integer order_number = jsonChildNode.optInt("order_number");
-                Integer id = jsonChildNode.optInt("id");
-                String  created_at = jsonChildNode.optString("created_at");
-                String status = jsonChildNode.optString("status");
+                String  pending = jsonChildNode.optString("pending");
+                String  processing = jsonChildNode.optString("processing");
+                String  on_hold = jsonChildNode.optString("on-hold");
+                String  completed = jsonChildNode.optString("completedc");
+                String  cancelled = jsonChildNode.optString("cancelled");
+                String  refunded = jsonChildNode.optString("refunded");
+                String failed = jsonChildNode.optString("failed");
 
                 items.add(new Orders(id,order_number,created_at,status));
             }
