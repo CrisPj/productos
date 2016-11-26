@@ -27,12 +27,12 @@ import javax.net.ssl.X509TrustManager;
 
 public class MainActivity extends AppCompatActivity {
 
-    ListView listProducts;
-    List<Products> items = new ArrayList<Products>();
+    ListView listOrders;
+    List<Orders> items = new ArrayList<Orders>();
     String consumer_key = "ck_937c6fcaa34debb9f047afcf4d46b6c055518e44";
     String consumer_secret = "cs_bd73d50ea69576596774a0d8487ebf067e377307";
 
-    String url = "https://192.168.43.223/wordpress/wc-api/v3/products";
+    String url = "https://192.168.43.223/wordpress/wc-api/v3/orders";
     String jsonResult;
 
 
@@ -41,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        listProducts = (ListView) findViewById(R.id.listProductos);
+        listOrders = (ListView) findViewById(R.id.listOrdenes);
         NukeSSLCerts.nuke();
-        loadProducts();
-        listProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        loadOrders();
+        listOrders.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void loadProducts() {
-        LoadProductsTask tarea = new LoadProductsTask(this, consumer_key, consumer_secret);
+    private void loadOrders() {
+        LoadOrdersTask tarea = new LoadOrdersTask(this, consumer_key, consumer_secret);
         try {
             jsonResult = tarea.execute(new String[] { url }).get();
         } catch (InterruptedException e) {
@@ -77,17 +77,16 @@ public class MainActivity extends AppCompatActivity {
         try {
             //lbl1.setText(jsonResult);
             JSONObject jsonResponse = new JSONObject(jsonResult);
-            JSONArray jsonMainNode = jsonResponse.optJSONArray("products");
+            JSONArray jsonMainNode = jsonResponse.optJSONArray("orders");
 
             for (int i = 0; i < jsonMainNode.length(); i++) {
                 JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-                String name = jsonChildNode.optString("title");
-                String type = jsonChildNode.optString("type");
-                Integer id_product = jsonChildNode.optInt("id");
-                Double price = jsonChildNode.optDouble("price");
-                String ImageURL = jsonChildNode.optString("featured_src");
+                Integer order_number = jsonChildNode.optInt("order_number");
+                Integer id = jsonChildNode.optInt("id");
+                String  created_at = jsonChildNode.optString("created_at");
+                String status = jsonChildNode.optString("status");
 
-                items.add(new Products(id_product, name, type, price, ImageURL));
+                items.add(new Orders(id,order_number,created_at,status));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -96,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        listProducts.setAdapter(new ProductsAdapter(this, items));
+        listOrders.setAdapter(new OrdersAdapter(this, items));
     }
 
     public static class NukeSSLCerts {

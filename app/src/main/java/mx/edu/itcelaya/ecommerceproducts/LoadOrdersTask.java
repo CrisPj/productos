@@ -17,14 +17,14 @@ import java.net.URLConnection;
  * Created by niluxer on 5/16/16.
  */
 
-public class LoadProductsTask extends AsyncTask<String, Void, String> {
+public class LoadOrdersTask extends AsyncTask<String, Void, String> {
 
     String jsonResult;
     String consumer_key, consumer_secret;
     private Context contexto;
 
 
-    public LoadProductsTask(Context c, String _consumer_key, String _consumer_secret) {
+    public LoadOrdersTask(Context c, String _consumer_key, String _consumer_secret) {
         contexto = c;
         consumer_key = _consumer_key;
         consumer_secret = _consumer_secret;
