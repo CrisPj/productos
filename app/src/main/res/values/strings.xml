@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">EcommerceProducts</string>
     <string name="title_activity_rewiews">Rewiews</string>
+    <string-array name="orders_arrays">
+        <item>pending</item>
+        <item>processing</item>
+        <item>on-hold</item>
+        <item>completed</item>
+        <item>cancelled</item>
+        <item>refunded</item>
+        <item>failed</item>
+    </string-array>
 </resources>
