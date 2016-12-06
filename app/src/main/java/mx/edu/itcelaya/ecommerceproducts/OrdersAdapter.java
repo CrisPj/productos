@@ -38,12 +38,12 @@ public class OrdersAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return this.ordenes.getOrders().size();
+        return this.ordenes.getOrders().length;
     }
 
     @Override
     public Object getItem(int position) {
-        return this.ordenes.getOrders().get(position);
+        return this.ordenes.getOrders()[position];
     }
 
     @Override
@@ -66,17 +66,17 @@ public class OrdersAdapter extends BaseAdapter {
         TextView tvMetodo   = (TextView) rowView.findViewById(R.id.tvMetodoP);
         TextView tvCliente   = (TextView) rowView.findViewById(R.id.tvCliente);
         TextView tvEmail   = (TextView) rowView.findViewById(R.id.tvEmail);
-        final Order item = this.ordenes.getOrders().get(position);
-        tvName.setText(""+item.getOrderNumber());
-        tvCreated.setText(item.getCreatedAt());
-        tvTotalP.setText(""+item.getTotalLineItemsQuantity());
+        final OrderElement item = this.ordenes.getOrders()[position];
+        tvName.setText(""+item.getOrder_number());
+        tvCreated.setText(item.getCreated_at());
+        tvTotalP.setText(""+item.getTotal_line_items_quantity());
         tvTotalC.setText(""+item.getTotal());
         tvEmail.setText(""+item.getCustomer().getEmail());
-        tvCliente.setText(item.getCustomer().getUsername()+""+item.getCustomer().getFirstName() + " " + item.getCustomer().getLastName());
+        tvCliente.setText(item.getCustomer().getUsername()+""+item.getCustomer().getFirst_name() + " " + item.getCustomer().getLast_name());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (Objects.equals(item.getStatus(), "completed"))
             {
-                tvMetodo.setText(""+item.getPaymentDetails().getMethodTitle());
+                tvMetodo.setText(""+item.getPayment_details().getMethod_title());
             }
             else
             {
